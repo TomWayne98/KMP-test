@@ -47,4 +47,8 @@ class MainActivity : AppCompatActivity() {
         numBTV.addTextChangedListener(textWatcher)
 
     }
+
+    private fun foo() {
+
+    }
 }

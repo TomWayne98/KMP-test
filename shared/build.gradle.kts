@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization")
     id("kotlin-android-extensions")
 }
 group = "com.jetbrains"
@@ -14,6 +15,10 @@ repositories {
     jcenter()
     mavenCentral()
 }
+
+val ktorVersion = "1.4.0"
+val sqlDelightVersion: String by project
+
 kotlin {
     android()
     ios {
@@ -24,15 +29,24 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+            }
+        }
+
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+
             }
         }
         val androidMain by getting {
             dependencies {
+                implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("com.google.android.material:material:1.2.0")
             }
         }
@@ -42,7 +56,11 @@ kotlin {
                 implementation("junit:junit:4.12")
             }
         }
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+            }
+        }
         val iosTest by getting
     }
 }
