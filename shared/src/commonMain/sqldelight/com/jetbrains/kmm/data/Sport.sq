@@ -1,0 +1,18 @@
+CREATE TABLE SQLSport (
+  idSport INTEGER NOT NULL,
+  sportName TEXT NOT NULL,
+  sportCode TEXT NOT NULL,
+  sportOrder INTEGER NOT NULL
+);
+
+insert:
+INSERT INTO SQLSport (idSport,sportName, sportCode, sportOrder) VALUES (?, ?, ?, ?);
+
+insertAll:
+INSERT INTO SQLSport VALUES ?;
+
+selectAll:
+SELECT * FROM SQLSport;
+
+deleteItem:
+DELETE FROM SQLSport WHERE idSport = ?;

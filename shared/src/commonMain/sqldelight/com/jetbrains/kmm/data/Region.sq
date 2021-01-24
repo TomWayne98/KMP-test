@@ -5,3 +5,9 @@ CREATE TABLE Reqion (
   opttyRegionCode TEXT NOT NULL,
   regionOrder INTEGER NOT NULL
 );
+
+selectAll:
+SELECT * FROM Reqion;
+
+deleteItem:
+DELETE FROM Reqion WHERE idOpptyRegion = ?;
