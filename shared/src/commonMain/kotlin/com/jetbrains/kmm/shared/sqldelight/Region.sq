@@ -1,0 +1,7 @@
+CREATE TABLE Reqion (
+  idOpptyRegion INTEGER NOT NULL,
+  sportID INTEGER NOT NULL,
+  opptyRegionName TEXT NOT NULL,
+  opttyRegionCode TEXT NOT NULL,
+  regionOrder INTEGER NOT NULL
+);

@@ -1,0 +1,6 @@
+CREATE TABLE Sports (
+  idSport INTEGER NOT NULL,
+  sportName TEXT NOT NULL,
+  sportCode TEXT NOT NULL,
+  sportOrder INTEGER NOT NULL
+);

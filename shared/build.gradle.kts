@@ -4,8 +4,15 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("plugin.serialization")
-    id("kotlin-android-extensions")
+    id("com.squareup.sqldelight")
 }
+
+sqldelight {
+    database("AppDatabase") {
+        packageName = "com.jetbrains.kmm.shared.sqldelight"
+    }
+}
+
 group = "com.jetbrains"
 version = "1.0-SNAPSHOT"
 
@@ -14,6 +21,9 @@ repositories {
     google()
     jcenter()
     mavenCentral()
+    maven {
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+    }
 }
 
 val ktorVersion = "1.4.0"
@@ -34,6 +44,7 @@ kotlin {
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+
             }
         }
 
@@ -48,6 +59,8 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("com.google.android.material:material:1.2.0")
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
+
             }
         }
         val androidTest by getting {
@@ -59,6 +72,8 @@ kotlin {
         val iosMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+
             }
         }
         val iosTest by getting
