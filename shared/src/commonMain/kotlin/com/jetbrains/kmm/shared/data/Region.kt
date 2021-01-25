@@ -1,5 +1,6 @@
 package com.jetbrains.kmm.shared.data
 
+import com.jetbrains.kmm.data.SQLReqion
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,3 +16,13 @@ data class Region(
     val regionOrder: Int,
     val leagues: List<League>
 )
+
+fun Region.toSQLItem(parentSportId: Int): SQLReqion {
+    return SQLReqion(
+        parentSportId.toLong(),
+        this.idOpptyRegion.toLong(),
+        this.opptyRegionName,
+        this.opttyRegionCode.orEmpty(),
+        this.regionOrder.toLong()
+    )
+}

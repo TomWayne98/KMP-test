@@ -1,0 +1,18 @@
+CREATE TABLE SQLLeague (
+  parentRegionId INTEGER NOT NULL,
+  leagueId INTEGER NOT NULL,
+  leagueName TEXT NOT NULL,
+  eventNote TEXT
+);
+
+insert:
+INSERT INTO SQLLeague VALUES ?;
+
+selectAll:
+SELECT * FROM SQLLeague;
+
+deleteItem:
+DELETE FROM SQLLeague WHERE leagueId = ?;
+
+deleteAllItems:
+DELETE FROM SQLLeague;

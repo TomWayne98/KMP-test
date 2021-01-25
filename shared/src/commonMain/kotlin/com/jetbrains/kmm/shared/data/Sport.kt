@@ -1,5 +1,6 @@
 package com.jetbrains.kmm.shared.data
 
+import com.jetbrains.kmm.data.SQLSport
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,3 +16,12 @@ data class Sport(
     val sportOrder: Int,
     val regions: List<Region>
 )
+
+fun Sport.toSQLItem(): SQLSport {
+    return SQLSport(
+        this.idSport.toLong(),
+        this.sportName,
+        this.sportCode,
+        this.sportOrder.toLong()
+    )
+}

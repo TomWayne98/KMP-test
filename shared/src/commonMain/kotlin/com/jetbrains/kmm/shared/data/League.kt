@@ -1,5 +1,6 @@
 package com.jetbrains.kmm.shared.data
 
+import com.jetbrains.kmm.data.SQLLeague
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,3 +16,12 @@ data class League(
     //@SerialName("count_of_sidebets")
     val matches: List<Match>
 )
+
+fun League.toSQLItem(parentRegionId: Int): SQLLeague {
+   return SQLLeague(
+        parentRegionId.toLong(),
+        leagueId.toLong(),
+        leagueName,
+        eventNote
+    )
+}

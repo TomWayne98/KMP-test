@@ -1,5 +1,6 @@
 package com.jetbrains.kmm.shared.data
 
+import com.jetbrains.kmm.data.SQLOdd
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -20,3 +21,16 @@ data class Odd(
     @SerialName("in_ticket")
     val inTicket: Boolean
 )
+
+fun Odd.toSQLItem(parentMatchId: Int): SQLOdd {
+    return SQLOdd(
+        parentMatchId.toLong(),
+        this.tipName,
+        this.tipShortname,
+        this.oddsValue.toDouble(),
+        this.oddsValueNumber.toDouble(),
+        this.oddsId.toLong(),
+        this.tipId.toLong(),
+        this.inTicket
+    )
+}

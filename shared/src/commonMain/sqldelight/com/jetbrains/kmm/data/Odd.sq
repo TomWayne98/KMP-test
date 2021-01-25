@@ -1,0 +1,22 @@
+CREATE TABLE SQLOdd (
+  parentMatchId INTEGER NOT NULL,
+  tipName TEXT,
+  tipShortname TEXT,
+  oddsValue REAL NOT NULL,
+  oddsValueNumber REAL NOT NULL,
+  oddsId INTEGER NOT NULL,
+  tipId INTEGER NOT NULL,
+  inTicket INTEGER AS Boolean
+);
+
+selectAll:
+SELECT * FROM SQLOdd;
+
+insert:
+INSERT INTO SQLOdd VALUES ?;
+
+deleteItem:
+DELETE FROM SQLOdd WHERE tipId = ?;
+
+deleteAllItems:
+DELETE FROM SQLOdd;

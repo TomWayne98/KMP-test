@@ -6,9 +6,6 @@ CREATE TABLE SQLSport (
 );
 
 insert:
-INSERT INTO SQLSport (idSport,sportName, sportCode, sportOrder) VALUES (?, ?, ?, ?);
-
-insertAll:
 INSERT INTO SQLSport VALUES ?;
 
 selectAll:
@@ -16,3 +13,6 @@ SELECT * FROM SQLSport;
 
 deleteItem:
 DELETE FROM SQLSport WHERE idSport = ?;
+
+deleteAllItems:
+DELETE FROM SQLSport;

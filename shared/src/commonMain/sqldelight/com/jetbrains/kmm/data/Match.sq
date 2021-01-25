@@ -1,0 +1,24 @@
+CREATE TABLE SQLMatch (
+  parentLeagueId INTEGER NOT NULL,
+  optyInfoNumber INTEGER NOT NULL,
+  optyEndDateFormat TEXT NOT NULL,
+  optyEndTimeFormat TEXT NOT NULL,
+  teamName1 TEXT,
+  teamName2 TEXT,
+  optyName TEXT,
+  opportunityId INTEGER NOT NULL,
+  opptyEndDate TEXT,
+  opptyEndTime TEXT,
+  opptyNote TEXT,
+  opptyTypeName TEXT,
+  opptyTreeTypeId INTEGER NOT NULL
+);
+
+insert:
+INSERT INTO SQLMatch VALUES ?;
+
+selectAll:
+SELECT * FROM SQLMatch;
+
+deleteAllItems:
+DELETE FROM SQLMatch;

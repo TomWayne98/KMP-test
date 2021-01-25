@@ -1,5 +1,8 @@
 package com.jetbrains.kmm.shared
 
+import com.github.aakira.napier.Napier
+import com.jetbrains.kmm.SomeDatabase
+import com.jetbrains.kmm.data.SQLSport
 import com.jetbrains.kmm.shared.data.*
 import io.ktor.client.*
 import io.ktor.client.features.json.*
@@ -26,7 +29,7 @@ class Network {
             }
         }
 
-        suspend fun updatePrematchJSON() {
+        suspend fun parsePrematchJSON(db: SomeDatabase) {
             val result = downloadJSON()
             //android.util.Log.d("TOMW", ": Downloaded")
             val sports = result.result.sports
@@ -36,25 +39,65 @@ class Network {
             val matches = mutableListOf<Match>()
             val odds = mutableListOf<Odd>()
 
-            sports.forEach { it ->
-            //    android.util.Log.d("TOMW", ": Region: ${it.regions}")
-                regions.addAll(it.regions)
+            println("TEST")
+
+            db.transaction {
+                db.sportQueries.deleteAllItems()
+                db.regionQueries.deleteAllItems()
+                db.matchQueries.deleteAllItems()
+                db.leagueQueries.deleteAllItems()
+                db.oddQueries.deleteAllItems()
             }
 
-            regions.forEach {
-                leagues.addAll(it.leagues)
+            sports.forEach { sport ->
+                regions.addAll(sport.regions)
+
+                db.transaction {
+                    this.afterCommit { Napier.d("TOMW",tag = "Sports inserted into DB ") }
+                    this.afterRollback { Napier.d("TOMW",tag = "Sports insert into DB failed ") }
+                    //db.sportQueries.insertAll(sport)
+                    db.sportQueries.insert(sport.toSQLItem())
+                }
             }
 
-            leagues.forEach {
-                matches.addAll(it.matches)
+            regions.forEach { region ->
+                leagues.addAll(region.leagues)
+
+                db.transaction {
+                    db.regionQueries.deleteAllItems()
+                    this.afterCommit { Napier.d("TOMW",tag = "Region inserted into DB ") }
+                    this.afterRollback { Napier.d("TOMW",tag = "Region insert into DB failed ") }
+                    db.regionQueries.insert(region.toSQLItem(region.regionOrder))
+                }
             }
 
-            matches.forEach {
-                odds.addAll(it.odds)
+            leagues.forEach { league ->
+                matches.addAll(league.matches)
+                db.transaction {
+                    this.afterCommit { Napier.d("TOMW",tag = "League inserted into DB ") }
+                    this.afterRollback { Napier.d("TOMW",tag = "League insert into DB failed ") }
+                    db.leagueQueries.insert(league.toSQLItem(league.leagueId))
+                }
             }
 
-            //android.util.Log.d("TOMW", "We parsed like: ${odds.size} odds")
+            matches.forEach { match ->
+                odds.addAll(match.odds)
+                db.transaction {
+                    this.afterCommit { Napier.d("TOMW",tag = "Match inserted into DB ") }
+                    this.afterRollback { Napier.d("TOMW",tag = "Match insert into DB failed ") }
+                    db.matchQueries.insert(match.toSQLItem(match.opportunityId))
+                }
+            }
 
+            odds.forEach { odd ->
+                db.transaction {
+                    this.afterCommit { Napier.d("TOMW",tag = "Odd inserted into DB ") }
+                    this.afterRollback { Napier.d("TOMW",tag = "Odd insert into DB failed ") }
+                    db.oddQueries.insert(odd.toSQLItem(odd.oddsId))
+                }
+            }
+            Napier.d("TOMW NAPIER END ")
+            println("TEST 1")
         }
 
         suspend fun downloadJSON() : JSONFile {

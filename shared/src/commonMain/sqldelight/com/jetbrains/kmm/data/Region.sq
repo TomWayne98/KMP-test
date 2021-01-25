@@ -1,13 +1,19 @@
-CREATE TABLE Reqion (
+CREATE TABLE SQLReqion (
+  parentSportId INTEGER NOT NULL,
   idOpptyRegion INTEGER NOT NULL,
-  sportID INTEGER NOT NULL,
   opptyRegionName TEXT NOT NULL,
   opttyRegionCode TEXT NOT NULL,
   regionOrder INTEGER NOT NULL
 );
 
 selectAll:
-SELECT * FROM Reqion;
+SELECT * FROM SQLReqion;
+
+insert:
+INSERT INTO SQLReqion VALUES ?;
 
 deleteItem:
-DELETE FROM Reqion WHERE idOpptyRegion = ?;
+DELETE FROM SQLReqion WHERE idOpptyRegion = ?;
+
+deleteAllItems:
+DELETE FROM SQLReqion;
