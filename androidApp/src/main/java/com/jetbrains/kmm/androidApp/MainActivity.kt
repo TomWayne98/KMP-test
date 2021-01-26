@@ -21,10 +21,10 @@ fun greet(): String {
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.activity_main)
 
-        val tv: TextView = findViewById(R.id.textView)
-        tv.text = greet()
+      /*  val tv: TextView = findViewById(R.id.textView)
+        tv.text = greet()*/
 
         foo()
 /*

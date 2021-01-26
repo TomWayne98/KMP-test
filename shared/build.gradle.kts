@@ -28,6 +28,7 @@ repositories {
 
 val ktorVersion = "1.4.0"
 val sqlDelightVersion: String by project
+val napierVersion = "1.5.0-alpha1"
 
 kotlin {
     android()
@@ -43,6 +44,7 @@ kotlin {
             dependencies {
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation ("com.github.aakira:napier:$napierVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
 
             }
