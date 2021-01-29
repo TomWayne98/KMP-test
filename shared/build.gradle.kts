@@ -35,12 +35,14 @@ val kissmeVersion: String by project
 kotlin {
     android()
     // Revert to just ios() when gradle plugin can properly resolve it
+    // This block is needed to make NativeSQLDriver visible - to make DB work on iOS
     val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
     if (onPhone) {
         iosArm64("ios")
     } else {
         iosX64("ios")
     }
+
     ios {
         binaries {
             framework {
