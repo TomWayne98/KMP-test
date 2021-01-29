@@ -22,8 +22,6 @@ class SharedCodeEntryPoint {
     }
 }
 
-
-
 object DatabaseCreator {
     fun getDataBase(dbArgs: DbArgs): SomeDatabase? {
         val sqlDriver  = getSqlDriver(dbArgs)

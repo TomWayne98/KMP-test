@@ -3,6 +3,7 @@ package com.jetbrains.kmm.androidApp
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +11,11 @@ import com.jetbrains.androidApp.R
 import com.jetbrains.kmm.shared.Calculator
 import com.jetbrains.kmm.shared.Greeting
 import com.jetbrains.kmm.shared.SharedCodeEntryPoint
+import com.jetbrains.kmm.shared.Sys
 import com.jetbrains.kmm.shared.sqldelight.DbArgs
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 
 fun greet(): String {
@@ -21,13 +25,12 @@ fun greet(): String {
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
+        setupCalculator()
+        connectToTestEmmiter()
+    }
 
-      /*  val tv: TextView = findViewById(R.id.textView)
-        tv.text = greet()*/
-
-        foo()
-/*
+    private fun setupCalculator() {
         val numATV: EditText = findViewById(R.id.editTextNumberDecimalA)
         val numBTV: EditText = findViewById(R.id.editTextNumberDecimalB)
 
@@ -50,11 +53,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         numATV.addTextChangedListener(textWatcher)
-        numBTV.addTextChangedListener(textWatcher)*/
-
+        numBTV.addTextChangedListener(textWatcher)
     }
 
-    private fun foo() {
+    private fun connectToTestEmmiter() {
+        val sys = Sys()
+        sys.start()
+        GlobalScope.launch {
+            sys.getChanel().consumeEach {
+                Log.d("TOMW", "Channel message received: $it")
+            }
+        }
+    }
+
+    private fun savePrematchToDB() {
         val entryPoint = SharedCodeEntryPoint()
         entryPoint.prepareDb(DbArgs(this.applicationContext))
         MainScope().launch {
