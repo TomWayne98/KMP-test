@@ -2,7 +2,7 @@ package com.jetbrains.kmm.shared.sqldelight
 
 import com.jetbrains.kmm.SomeDatabase
 import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.ios.NativeSqliteDriver
+import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 
 actual class DbArgs
 

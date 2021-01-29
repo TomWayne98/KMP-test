@@ -29,9 +29,18 @@ repositories {
 val ktorVersion = "1.4.0"
 val sqlDelightVersion: String by project
 val napierVersion = "1.5.0-alpha1"
+val kcron = "0.2.0"
+val kissmeVersion: String by project
 
 kotlin {
     android()
+    // Revert to just ios() when gradle plugin can properly resolve it
+    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
+    if (onPhone) {
+        iosArm64("ios")
+    } else {
+        iosX64("ios")
+    }
     ios {
         binaries {
             framework {
@@ -46,7 +55,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation ("com.github.aakira:napier:$napierVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-
+              //  implementation("com.netguru.kissme:common:$kissmeVersion")
+               // implementation("com.ucasoft.kcron:kcron-common:$kcron")
             }
         }
 
@@ -62,6 +72,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("com.google.android.material:material:1.2.0")
                 implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
+             //   implementation("com.netguru.kissme:android:0.2.5")
 
             }
         }
@@ -75,7 +86,7 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
                 implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
-
+           //     implementation("com.netguru.kissme:ios:0.2.5")
             }
         }
 
